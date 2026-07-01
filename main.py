@@ -178,5 +178,52 @@ def main():
         else:
             print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
 
+def search_prompt():
+    """4. 키워드를 입력받아 제목 또는 내용에서 검색하는 함수"""
+    print("\n=== 프롬프트 검색 ===")
+    keyword = input("검색어: ").strip()
+    
+    if not keyword:
+        print("[오류] 검색어를 입력해주세요.")
+        return
+
+    print(f"\n'{keyword}' 검색 결과:")
+    
+    count = 0
+    # 전체 프롬프트를 돌면서 제목이나 내용에 검색어가 포함되어 있는지 확인
+    for p in prompts:
+        if keyword in p["title"] or keyword in p["content"]:
+            count += 1
+            fav_icon = " ⭐" if p["favorite"] else ""
+            print(f"{count}. [{p['category']}] {p['title']}{fav_icon}")
+            
+    if count == 0:
+        print("[안내] 검색 결과가 없습니다.")
+    else:
+        print(f"\n{count}개의 프롬프트를 찾았습니다.")
+
+def main():
+    """프로그램의 메인 루프"""
+    while True:
+        show_menu()
+        choice = input("선택: ").strip()
+        
+        if choice == "0":
+            print("프로그램을 종료합니다.")
+            break
+        elif choice == "1":
+            add_prompt()
+        elif choice == "2":
+            show_list()
+        elif choice == "3":
+            view_by_category()
+        elif choice == "4":
+            # 임시 안내를 지우고 검색 함수를 연결합니다!
+            search_prompt()
+        elif choice in ["5", "6", "7"]:
+            print(f"\n[안내] {choice}번 기능은 곧 구현될 예정입니다.")
+        else:
+            print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
+
 if __name__ == "__main__":
     main()
