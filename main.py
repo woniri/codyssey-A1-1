@@ -32,6 +32,49 @@ def show_menu():
     print("7. 즐겨찾기 목록")
     print("0. 종료")
 
+# ... (상단의 prompts 데이터와 show_menu 함수는 그대로 둡니다) ...
+
+def add_prompt():
+    """1. 새 프롬프트를 입력받아 리스트에 추가하는 함수"""
+    print("\n=== 프롬프트 추가 ===")
+    
+    # 1. 제목 입력 (빈 값 체크)
+    while True:
+        title = input("제목: ").strip()
+        if title:
+            break
+        print("[오류] 제목은 비어둘 수 없습니다. 다시 입력해주세요.")
+        
+    # 2. 내용 입력 (빈 값 체크)
+    while True:
+        content = input("내용: ").strip()
+        if content:
+            break
+        print("[오류] 내용은 비어둘 수 없습니다. 다시 입력해주세요.")
+
+    # 3. 카테고리 선택
+    categories = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
+    print("\n카테고리 선택:")
+    for i, cat in enumerate(categories, 1):
+        print(f"{i}) {cat}")
+        
+    while True:
+        cat_choice = input("선택: ").strip()
+        if cat_choice.isdigit() and 1 <= int(cat_choice) <= len(categories):
+            category = categories[int(cat_choice) - 1]
+            break
+        print("[오류] 올바른 번호를 선택해주세요.")
+
+    # 4. 데이터 딕셔너리 생성 후 prompts 리스트에 추가 (즐겨찾기 기본값은 False)
+    new_item = {
+        "title": title,
+        "content": content,
+        "category": category,
+        "favorite": False
+    }
+    prompts.append(new_item)
+    print("\n프롬프트가 추가되었습니다!")
+
 def main():
     """프로그램의 메인 루프를 담당하는 함수"""
     while True:
@@ -42,13 +85,12 @@ def main():
             print("프로그램을 종료합니다.")
             break
         elif choice == "1":
-            print("\n[안내] 프롬프트 추가 기능은 곧 구현될 예정입니다.")
-        # 아직 구현되지 않은 메뉴들은 임시 처리
+            # 임시 안내 문구를 지우고, 방금 만든 함수를 연결합니다!
+            add_prompt()
         elif choice in ["2", "3", "4", "5", "6", "7"]:
             print(f"\n[안내] {choice}번 기능은 곧 구현될 예정입니다.")
         else:
             print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
 
-# 프로그램 시작점
 if __name__ == "__main__":
     main()
