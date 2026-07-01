@@ -225,5 +225,89 @@ def main():
         else:
             print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
 
+def show_detail():
+    """5. 프롬프트 번호를 입력받아 전체 내용을 출력하는 함수"""
+    print("\n=== 프롬프트 상세 보기 ===")
+    if not prompts:
+        print("[안내] 등록된 프롬프트가 없습니다.")
+        return
+        
+    idx_input = input("번호 입력: ").strip()
+    if not idx_input.isdigit() or not (1 <= int(idx_input) <= len(prompts)):
+        print("[오류] 올바른 프롬프트 번호를 입력해주세요.")
+        return
+        
+    p = prompts[int(idx_input) - 1]
+    fav_status = "⭐" if p["favorite"] else "❌"
+    
+    print("─" * 30)
+    print(f"제목: {p['title']}")
+    print(f"카테고리: {p['category']}")
+    print(f"즐겨찾기: {fav_status}")
+    print("─" * 30)
+    print("내용:")
+    print(p["content"])
+    print("─" * 30)
+
+def toggle_favorite():
+    """6. 프롬프트 번호를 입력받아 즐겨찾기를 추가/해제하는 함수"""
+    print("\n=== 즐겨찾기 관리 ===")
+    if not prompts:
+        print("[안내] 등록된 프롬프트가 없습니다.")
+        return
+        
+    idx_input = input("프롬프트 번호 입력: ").strip()
+    if not idx_input.isdigit() or not (1 <= int(idx_input) <= len(prompts)):
+        print("[오류] 올바른 프롬프트 번호를 입력해주세요.")
+        return
+        
+    p = prompts[int(idx_input) - 1]
+    # True는 False로, False는 True로 반전(Toggle)시킵니다.
+    p["favorite"] = not p["favorite"]
+    
+    status_msg = "추가" if p["favorite"] else "해제"
+    print(f"'{p['title']}' 프롬프트를 즐겨찾기에 {status_msg}했습니다!")
+
+def show_favorites():
+    """7. 즐겨찾기된 프롬프트만 모아서 출력하는 함수"""
+    print("\n=== 즐겨찾기 목록 ===")
+    
+    count = 0
+    for i, p in enumerate(prompts, 1):
+        if p["favorite"]:
+            count += 1
+            print(f"{count}. [{p['category']}] {p['title']} ⭐ (원래번호: {i})")
+            
+    if count == 0:
+        print("[안내] 즐겨찾기된 프롬프트가 없습니다.")
+    else:
+        print(f"\n총 {count}개의 즐겨찾기")
+
+def main():
+    """프로그램의 메인 루프"""
+    while True:
+        show_menu()
+        choice = input("선택: ").strip()
+        
+        if choice == "0":
+            print("프로그램을 종료합니다.")
+            break
+        elif choice == "1":
+            add_prompt()
+        elif choice == "2":
+            show_list()
+        elif choice == "3":
+            view_by_category()
+        elif choice == "4":
+            search_prompt()
+        elif choice == "5":
+            show_detail()       # 상세 보기 연결
+        elif choice == "6":
+            toggle_favorite()   # 즐겨찾기 관리 연결
+        elif choice == "7":
+            show_favorites()    # 즐겨찾기 목록 연결
+        else:
+            print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
+
 if __name__ == "__main__":
     main()
