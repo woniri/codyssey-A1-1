@@ -92,5 +92,41 @@ def main():
         else:
             print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
 
+def show_list():
+    """2. 저장된 모든 프롬프트 목록을 출력하는 함수"""
+    print("\n=== 프롬프트 목록 ===")
+    
+    # 등록된 프롬프트가 없을 때 예외 처리
+    if not prompts:
+        print("[안내] 등록된 프롬프트가 없습니다.")
+        return
+
+    # 순서대로 번호(i)를 붙여 출력 (1부터 시작)
+    for i, p in enumerate(prompts, 1):
+        # 즐겨찾기 상태에 따라 별표(⭐) 표시
+        fav_icon = " ⭐" if p["favorite"] else ""
+        print(f"{i}. [{p['category']}] {p['title']}{fav_icon}")
+        
+    print(f"\n총 {len(prompts)}개의 프롬프트")
+
+def main():
+    """프로그램의 메인 루프"""
+    while True:
+        show_menu()
+        choice = input("선택: ").strip()
+        
+        if choice == "0":
+            print("프로그램을 종료합니다.")
+            break
+        elif choice == "1":
+            add_prompt()
+        elif choice == "2":
+            # 임시 안내를 지우고 목록 함수를 연결합니다!
+            show_list()
+        elif choice in ["3", "4", "5", "6", "7"]:
+            print(f"\n[안내] {choice}번 기능은 곧 구현될 예정입니다.")
+        else:
+            print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
+
 if __name__ == "__main__":
     main()
