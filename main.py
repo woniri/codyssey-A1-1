@@ -310,4 +310,4 @@ def main():
             print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
 
 if __name__ == "__main__":
-    main()
+    main()"# Code Refactoring and Clean up" 
