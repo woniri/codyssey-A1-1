@@ -128,5 +128,55 @@ def main():
         else:
             print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
 
+def view_by_category():
+    """3. 특정 카테고리를 선택하여 해당 프롬프트만 출력하는 함수"""
+    categories = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
+    print("\n=== 카테고리별 조회 ===")
+    for i, cat in enumerate(categories, 1):
+        print(f"{i}) {cat}")
+        
+    while True:
+        cat_choice = input("선택: ").strip()
+        if cat_choice.isdigit() and 1 <= int(cat_choice) <= len(categories):
+            selected_category = categories[int(cat_choice) - 1]
+            break
+        print("[오류] 올바른 번호를 선택해주세요.")
+
+    print(f"\n[{selected_category}] 카테고리 프롬프트:")
+    
+    # 선택한 카테고리에 해당하는 프롬프트만 뽑아서 출력
+    count = 0
+    for p in prompts:
+        if p["category"] == selected_category:
+            count += 1
+            fav_icon = " ⭐" if p["favorite"] else ""
+            print(f"{count}. {p['title']}{fav_icon}")
+            
+    if count == 0:
+        print("[안내] 해당 카테고리에 등록된 프롬프트가 없습니다.")
+    else:
+        print(f"\n총 {count}개의 프롬프트")
+
+def main():
+    """프로그램의 메인 루프"""
+    while True:
+        show_menu()
+        choice = input("선택: ").strip()
+        
+        if choice == "0":
+            print("프로그램을 종료합니다.")
+            break
+        elif choice == "1":
+            add_prompt()
+        elif choice == "2":
+            show_list()
+        elif choice == "3":
+            # 임시 안내를 지우고 카테고리 조회 함수를 연결합니다!
+            view_by_category()
+        elif choice in ["4", "5", "6", "7"]:
+            print(f"\n[안내] {choice}번 기능은 곧 구현될 예정입니다.")
+        else:
+            print("\n[오류] 잘못된 번호입니다. 다시 입력해주세요.")
+
 if __name__ == "__main__":
     main()
